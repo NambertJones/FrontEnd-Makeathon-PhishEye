@@ -3,150 +3,183 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Phishing Protection | Dynamic Effect</title>
-    <link rel="icon" href="phishing.png" type="image/png" />
+    <title>Phishing Protection | AI Security</title>
+    <link rel="stylesheet" href="styles.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="phyle.css" />
     <style>
-      /* Fullscreen Video Background */
+      @import url("https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;700&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "SF Pro Display", sans-serif;
+      }
+
+      /* Video Background */
       .video-container {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
+        height: 100vh;
         overflow: hidden;
         z-index: -1;
       }
 
       .video-container video {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        min-width: 100%;
-        min-height: 100%;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
-      }
-
-      /* Page Layout */
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "San Francisco",
-          "Helvetica Neue", Helvetica, Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        position: relative;
+        filter: brightness(0.3) contrast(1.2);
       }
 
       .container {
         display: flex;
         align-items: center;
-        justify-content: flex-start;
-        width: 90%;
-        max-width: 1200px;
-        background: rgba(0, 0, 0, 0.7); /* Dark overlay for readability */
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        height: 100vh;
+        position: relative;
         padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
       }
 
       /* Floating Image */
       .left-image {
-        width: 250px;
+        width: 280px;
         height: auto;
-        border-radius: 10px;
-        margin-right: 20px;
-        animation: floatUpDown 6s ease-in-out infinite;
+        border-radius: 12px;
+        margin-right: 30px;
+        animation: floatUpDown 5s ease-in-out infinite;
       }
 
       @keyframes floatUpDown {
-        0% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-30px);
-        }
+        0%,
         100% {
           transform: translateY(0);
         }
+        50% {
+          transform: translateY(-25px);
+        }
       }
 
-      /* Content Section */
-      /* Smooth Appearance Effect */
+      /* Glassmorphism Effect */
       .content {
-        background: linear-gradient(
-          to right,
-          #1e3c72,
-          #2a5298
-        ); /* Blue Gradient */
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(15px);
         color: white;
         text-align: center;
-        padding: 30px;
-        border-radius: 15px;
+        padding: 40px;
+        border-radius: 18px;
         width: 60%;
-        max-width: 600px;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-
-        /* Initial State */
+        max-width: 650px;
+        box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
         opacity: 0;
-        transform: scale(0.8);
+        transform: translateY(30px);
         transition: opacity 1s ease-in-out, transform 0.5s ease-in-out;
       }
 
-      /* Hover Effect */
       .content:hover {
-        box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-        transform: scale(1.05);
+        box-shadow: 0 0 35px rgba(0, 255, 255, 0.6);
+        transform: translateY(0) scale(1.03);
       }
 
       .hero-title {
-        font-size: 2.5rem;
-        font-weight: bold;
+        font-size: 2.8rem;
+        font-weight: 700;
+        text-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
       }
 
       .hero-subtitle {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
+        margin-top: 10px;
+        opacity: 0.8;
       }
 
       /* Search Box */
+      .search-container {
+        margin-top: 25px;
+      }
+
       .search-container input {
-        width: 80%;
-        padding: 12px;
+        width: 85%;
+        padding: 14px;
         font-size: 16px;
-        border-radius: 10px;
+        border-radius: 12px;
         outline: none;
         border: 2px solid transparent;
+        background: rgba(255, 255, 255, 0.2);
         color: white;
-        background: rgb(14, 240, 225);
         transition: all 0.3s ease-in-out;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
       }
 
       .search-container input:hover,
       .search-container input:focus {
         border: 2px solid #00ffcc;
-        box-shadow: 0 0 15px #00ffcc;
+        box-shadow: 0 0 18px #00ffcc;
         transform: scale(1.05);
       }
 
       .search-container button {
-        padding: 12px 20px;
-        font-size: 16px;
-        background-color: #ff5722;
+        padding: 12px 25px;
+        font-size: 18px;
+        font-weight: bold;
+        background: linear-gradient(45deg, #ff5722, #ff8c00);
         color: white;
         border: none;
-        border-radius: 10px;
+        border-radius: 12px;
         cursor: pointer;
-        margin-top: 10px;
+        margin-top: 15px;
         transition: all 0.3s ease-in-out;
+        box-shadow: 0 0 10px rgba(255, 69, 0, 0.6);
       }
 
       .search-container button:hover {
-        background-color: #e64a19;
-        box-shadow: 0 0 15px #ff4500;
+        background: linear-gradient(45deg, #e64a19, #ff4500);
+        box-shadow: 0 0 20px rgba(255, 69, 0, 0.8);
         transform: scale(1.1);
+      }
+
+      /* Audio Styling */
+      .audio-container {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        opacity: 0.7;
+        transition: opacity 0.3s;
+      }
+
+      .audio-container:hover {
+        opacity: 1;
+      }
+
+      /* Mobile Responsiveness */
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .left-image {
+          width: 200px;
+          margin-bottom: 20px;
+        }
+
+        .content {
+          width: 90%;
+          padding: 30px;
+        }
+
+        .hero-title {
+          font-size: 2.2rem;
+        }
+
+        .search-container input {
+          width: 100%;
+        }
       }
     </style>
   </head>
@@ -159,17 +192,16 @@
       </video>
     </div>
 
+    <!-- Main Content -->
     <div class="container">
-      <!-- Floating Image -->
+      <!-- Image on the Left -->
       <img src="phishing.png" alt="Security Image" class="left-image" />
 
-      <!-- Content -->
+      <!-- Content on the Right -->
       <div class="content">
         <section class="hero-section">
-          <h1 class="hero-title">Protect Yourself from Phishing Attacks</h1>
-          <p class="hero-subtitle">
-            Stay secure with advanced AI-powered protection.
-          </p>
+          <h1 class="hero-title">Phishing Protection</h1>
+          <p class="hero-subtitle">Stay ahead with cutting-edge security.</p>
         </section>
 
         <section class="search-container">
@@ -183,14 +215,11 @@
       </div>
     </div>
 
+    <!-- Background Audio -->
+
+    <!-- Your Original Script Restored -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        gsap.to(".content", {
-          opacity: 1,
-          scale: 1,
-          duration: 1,
-          ease: "power2.out",
-        });
         gsap.from(".hero-title", {
           opacity: 0,
           y: -50,
@@ -208,6 +237,13 @@
           scale: 0.8,
           duration: 1,
           delay: 1,
+        });
+
+        gsap.to(".content", {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power2.out",
         });
       });
     </script>
