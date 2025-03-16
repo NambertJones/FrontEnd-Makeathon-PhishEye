@@ -14,6 +14,57 @@
         box-sizing: border-box;
         font-family: "SF Pro Display", sans-serif;
       }
+      .button {
+  /* in scss with just one variable i can change opacity with rgba(variable, opacity) but in css it's not possible so i have used three seperate variables */
+  /* with hue-rotate color can be changed */
+  --main-color: rgb(46, 213, 115);
+  --main-bg-color: rgba(46, 213, 116, 0.36);
+  --pattern-color: rgba(46, 213, 116, 0.073);
+
+  /* change this rotation value */
+  filter: hue-rotate(0deg);
+
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
+  background: radial-gradient(
+      circle,
+      var(--main-bg-color) 0%,
+      rgba(0, 0, 0, 0) 95%
+    ),
+    linear-gradient(var(--pattern-color) 1px, transparent 1px),
+    linear-gradient(to right, var(--pattern-color) 1px, transparent 1px);
+  background-size:
+    cover,
+    15px 15px,
+    15px 15px;
+  background-position:
+    center center,
+    center center,
+    center center;
+  border-image: radial-gradient(
+      circle,
+      var(--main-color) 0%,
+      rgba(0, 0, 0, 0) 100%
+    )
+    1;
+  border-width: 1px 0 1px 0;
+  color: var(--main-color);
+  padding: 1rem 3rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+  transition: background-size 0.2s ease-in-out;
+}
+
+.button:hover {
+  background-size:
+    cover,
+    10px 10px,
+    10px 10px;
+}
+.button:active {
+  filter: hue-rotate(250deg);
+}
 
       /* Video Background */
       .video-container {
@@ -120,7 +171,7 @@
         transform: scale(1.05);
       }
 
-      .search-container button {
+/*       .search-container button {
         padding: 12px 25px;
         font-size: 18px;
         font-weight: bold;
@@ -132,14 +183,14 @@
         margin-top: 15px;
         transition: all 0.3s ease-in-out;
         box-shadow: 0 0 10px rgba(255, 69, 0, 0.6);
-      }
+      } */
 
-      .search-container button:hover {
+/*       .search-container button:hover {
         background: linear-gradient(45deg, #e64a19, #ff4500);
         box-shadow: 0 0 20px rgba(255, 69, 0, 0.8);
         transform: scale(1.1);
       }
-
+ */
       /* Audio Styling */
       .audio-container {
         position: absolute;
@@ -207,7 +258,7 @@
             id="searchInput"
             placeholder="Enter your email or URL"
           />
-          <button>Analyze</button>
+          <button class="button">Analyze</button>
         </section>
       </div>
     </div>
