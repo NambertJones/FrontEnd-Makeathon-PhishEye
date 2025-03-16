@@ -1,84 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phishing Detection</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phishing Protection | Dynamic Effect</title>
+    <link rel="icon" href="phishing.png" type="image/png" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-            margin: 0;
+      /* Fullscreen Video Background */
+      .video-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+      }
+
+      .video-container video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        min-width: 100%;
+        min-height: 100%;
+        object-fit: cover;
+      }
+
+      /* Page Layout */
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "San Francisco",
+          "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        position: relative;
+      }
+
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 90%;
+        max-width: 1200px;
+        background: rgba(0, 0, 0, 0.7); /* Dark overlay for readability */
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+      }
+
+      /* Floating Image */
+      .left-image {
+        width: 250px;
+        height: auto;
+        border-radius: 10px;
+        margin-right: 20px;
+        animation: floatUpDown 6s ease-in-out infinite;
+      }
+
+      @keyframes floatUpDown {
+        0% {
+          transform: translateY(0);
         }
-        .container {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
+        50% {
+          transform: translateY(-30px);
         }
-        input[type="text"] {
-            width: 100%;
-            padding: 0.5rem;
-            margin-bottom: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        100% {
+          transform: translateY(0);
         }
-        button {
-            padding: 0.5rem 1rem;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #result {
-            margin-top: 1rem;
-            font-weight: bold;
-        }
+      }
+
+      /* Content Section */
+      /* Smooth Appearance Effect */
+      .content {
+        background: linear-gradient(
+          to right,
+          #1e3c72,
+          #2a5298
+        ); /* Blue Gradient */
+        color: white;
+        text-align: center;
+        padding: 30px;
+        border-radius: 15px;
+        width: 60%;
+        max-width: 600px;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+
+        /* Initial State */
+        opacity: 0;
+        transform: scale(0.8);
+        transition: opacity 1s ease-in-out, transform 0.5s ease-in-out;
+      }
+
+      /* Hover Effect */
+      .content:hover {
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        transform: scale(1.05);
+      }
+
+      .hero-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+      }
+
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+
+      /* Search Box */
+      .search-container input {
+        width: 80%;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 10px;
+        outline: none;
+        border: 2px solid transparent;
+        color: white;
+        background: rgb(14, 240, 225);
+        transition: all 0.3s ease-in-out;
+      }
+
+      .search-container input:hover,
+      .search-container input:focus {
+        border: 2px solid #00ffcc;
+        box-shadow: 0 0 15px #00ffcc;
+        transform: scale(1.05);
+      }
+
+      .search-container button {
+        padding: 12px 20px;
+        font-size: 16px;
+        background-color: #ff5722;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .search-container button:hover {
+        background-color: #e64a19;
+        box-shadow: 0 0 15px #ff4500;
+        transform: scale(1.1);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <!-- Video Background -->
+    <div class="video-container">
+      <video autoplay loop muted>
+        <source src="phisingbg.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
     <div class="container">
-        <h2>Phishing Detection</h2>
-        <label for="inputText">Enter URL or Email text:</label>
-        <input type="text" id="inputText" placeholder="Paste email text or URL here...">
-        <button onclick="checkPhishing()">Check</button>
-        <div id="result"></div>
+      <!-- Floating Image -->
+      <img src="phishing.png" alt="Security Image" class="left-image" />
+
+      <!-- Content -->
+      <div class="content">
+        <section class="hero-section">
+          <h1 class="hero-title">Protect Yourself from Phishing Attacks</h1>
+          <p class="hero-subtitle">
+            Stay secure with advanced AI-powered protection.
+          </p>
+        </section>
+
+        <section class="search-container">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Enter your email or URL"
+          />
+          <button>Analyze</button>
+        </section>
+      </div>
     </div>
 
     <script>
-        async function checkPhishing() {
-            const inputText = document.getElementById('inputText').value;
-            const resultDiv = document.getElementById('result');
-
-            if (!inputText.trim()) {
-                resultDiv.textContent = 'Please enter text or URL.';
-                return;
-            }
-
-            try {
-                const response = await fetch('https://phishing-virid.vercel.app/analyze', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text: inputText })
-                });
-
-                const data = await response.json();
-                resultDiv.textContent = `Result: ${data.result}`;
-            } catch (error) {
-                resultDiv.textContent = 'Error: Failed to fetch result.';
-                console.error('Error:', error);
-            }
-        }
+      document.addEventListener("DOMContentLoaded", () => {
+        gsap.to(".content", {
+          opacity: 1,
+          scale: 1,
+          duration: 1,
+          ease: "power2.out",
+        });
+        gsap.from(".hero-title", {
+          opacity: 0,
+          y: -50,
+          duration: 1,
+          ease: "power2.out",
+        });
+        gsap.from(".hero-subtitle", {
+          opacity: 0,
+          y: 20,
+          duration: 1,
+          delay: 0.5,
+        });
+        gsap.from(".search-container", {
+          opacity: 0,
+          scale: 0.8,
+          duration: 1,
+          delay: 1,
+        });
+      });
     </script>
-</body>
+  </body>
 </html>
