@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Protection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: black;
+            color: white;
+        }
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            overflow: hidden;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .floating-hacker {
+            animation: floatUpDown 3s ease-in-out infinite;
+        }
+        @keyframes floatUpDown {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Matrix Effect -->
+    <div class="matrix-bg">
+        <canvas id="binaryCanvas"></canvas>
+    </div>
+
+    <!-- Home Page -->
+    <div id="home-page" class="flex items-center justify-center h-screen relative">
+        <img src="https://i.ibb.co/jvtG6hCZ/dark-and-mysterious-hacker-with-mask-free-png.webp" 
+            alt="Hacker" class="absolute left-10 w-1/3 floating-hacker">
+        
+        <div class="bg-black bg-opacity-70 p-8 rounded-xl shadow-lg text-center border border-green-400 w-1/3">
+            <h1 class="text-green-500 text-3xl font-bold">PHISHING PROTECTION</h1>
+            <p class="text-gray-300 mt-2">Stay ahead with cutting-edge security.</p>
+            
+            <input type="text" id="phishing-input" placeholder="Enter your email or URL"
+                class="mt-4 px-4 py-2 w-full bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-green-400">
+            
+            <button id="analyze-btn"
+                class="mt-4 px-6 py-2 bg-green-500 text-black font-bold rounded-md hover:bg-green-700 transition-all">
+                ANALYZE
+            </button>
+
+            <p id="result" class="text-lg text-white mt-4"></p>
+        </div>
+    </div>
+
+    <script>
+        // Binary Matrix Effect
+        const canvas = document.getElementById('binaryCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const binaryChars = "010101110101010001101010010101".split("");
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(0);
+
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#0f0";
+            ctx.font = fontSize + "px monospace";
+            for (let i = 0; i < drops.length; i++) {
+                const text = binaryChars[Math.floor(Math.random() * binaryChars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(draw, 75);
+
+        // Analyze Button Click Event
+        document.getElementById("analyze-btn").addEventListener("click", async function () {
+            const input = document.getElementById("phishing-input").value.trim();
+            const resultElement = document.getElementById("result");
+
+            if (input === "") {
+                alert("Please enter a valid email or URL.");
+                return;
+            }
+
+            resultElement.textContent = "Analyzing...";
+            
+            try {
+                const response = await fetch("https://phishing-virid.vercel.app/analyze", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ text: input })
+                });
+
+                const data = await response.json();
+                resultElement.textContent = data.result;
+            } catch (error) {
+                resultElement.textContent = "Error: Unable to connect to the server.";
+            }
+        });
+    </script>
+</body>
+
+</html>
